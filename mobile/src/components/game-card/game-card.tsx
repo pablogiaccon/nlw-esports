@@ -1,23 +1,32 @@
 import { TouchableOpacityProps } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { THEME } from "../../theme";
-import { Game } from "../../utils/games";
+import { GameBanner } from "../../types/game";
 
 import * as S from "./styles";
 
 interface Props extends TouchableOpacityProps {
-  game: Game;
+  game: GameBanner;
 }
 
 const GameCard = ({ game, ...rest }: Props) => {
-  const { name, ads, cover } = game;
-  return (
-    <S.Container {...rest}>
-      <S.Cover source={cover}>
-        <S.Footer colors={THEME.COLORS.FOOTER}>
-          <S.Name>{name}</S.Name>
+  const { navigate } = useNavigation();
+  const { title, adsCount, bannerUrl, id } = game;
 
-          <S.Ads>{ads === 1 ? `${ads} anúncio` : `${ads} anúncios`}</S.Ads>
+  function handleOpenGame() {
+    navigate("game", { bannerUrl, id, title });
+  }
+
+  return (
+    <S.Container onPress={handleOpenGame} {...rest}>
+      <S.Cover source={{ uri: bannerUrl }}>
+        <S.Footer colors={THEME.COLORS.FOOTER}>
+          <S.Name>{title}</S.Name>
+
+          <S.Ads>
+            {adsCount === 1 ? `${adsCount} anúncio` : `${adsCount} anúncios`}
+          </S.Ads>
         </S.Footer>
       </S.Cover>
     </S.Container>
