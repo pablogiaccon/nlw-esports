@@ -1,8 +1,10 @@
-import { MagnifyingGlassPlus } from "phosphor-react";
+import { Root as DialogRoot } from "@radix-ui/react-dialog";
 
 import logo from "@/assets/logo-nlw-esports.svg";
+
 import { GameList } from "@/components/game-list";
-import { DialogCreateAd } from "@/components/dialog-create-ad";
+import { CreateAd } from "@/components/create-ad";
+import { CreateAdForm } from "@/components/create-ad-form";
 
 const Home = () => {
   return (
@@ -19,7 +21,10 @@ const Home = () => {
 
       <GameList />
 
-      <DialogCreateAd />
+      <DialogRoot>
+        <CreateAd />
+        <CreateAdForm />
+      </DialogRoot>
     </div>
   );
 };

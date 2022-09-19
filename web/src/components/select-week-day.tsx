@@ -1,44 +1,39 @@
-import { useState } from "react";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import { FieldError } from "react-hook-form";
 
-import { WeekDay, WEEK_DAYS } from "@/helpers/week-day";
+import { WEEK_DAYS } from "@/helpers/week-day";
 
-const SelectWeekDay = () => {
-  const [selectedWeekDay, setSelectedWeekDay] = useState<WeekDay[]>([]);
+interface Props {
+  value: string[];
+  onSelect(weekDays: string[]): void;
+  error?: FieldError;
+}
 
-  function handleSelect(day: WeekDay) {
-    const isSelected = selectedWeekDay.some((item) => item.value === day.value);
-
-    if (isSelected) {
-      const filteredSelectedWeekDay = selectedWeekDay.filter(
-        (item) => item.value !== day.value
-      );
-      setSelectedWeekDay(filteredSelectedWeekDay);
-    } else {
-      setSelectedWeekDay((prevState) => [...prevState, day]);
-    }
-  }
-
+const SelectWeekDay = ({ value, onSelect, error }: Props) => {
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor="weekDays">
         Quando costuma jogar? <span className="text-red-600">*</span>
       </label>
 
-      <div className="grid grid-cols-7 gap-1">
+      <ToggleGroup.Root
+        type="multiple"
+        className="grid grid-cols-7 gap-1"
+        value={value}
+        onValueChange={onSelect}
+      >
         {WEEK_DAYS.map((day) => (
-          <button
+          <ToggleGroup.Item
             key={day.value}
-            type="button"
-            className={`h-8 w-7 rounded ${
-              selectedWeekDay.includes(day) ? `bg-violet-500` : ` bg-zinc-900`
-            }`}
+            value={day.value}
             title={day.title}
-            onClick={() => handleSelect(day)}
+            className="h-8 w-7 rounded bg-zinc-900 [&[data-state=on]]:bg-violet-500"
           >
             {day.text}
-          </button>
+          </ToggleGroup.Item>
         ))}
-      </div>
+      </ToggleGroup.Root>
+      {error && <span className="text-red-600 text-xs">{error.message}</span>}
     </div>
   );
 };
