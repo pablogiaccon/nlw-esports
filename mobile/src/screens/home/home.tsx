@@ -34,6 +34,7 @@ const Home = () => {
         <Heading
           title="Encontre seu duo!"
           subTitle="Selecione o game que deseja jogar..."
+          style={{ padding: 32 }}
         />
 
         <FlatList

@@ -50,7 +50,11 @@ const Game = () => {
 
         <S.Cover source={{ uri: game.bannerUrl }} resizeMode="cover" />
 
-        <Heading title={game.title} subTitle="Conecte-se e comece a jogar!" />
+        <Heading
+          title={game.title}
+          subTitle="Conecte-se e comece a jogar!"
+          style={{ padding: 32 }}
+        />
 
         <FlatList
           data={ads}

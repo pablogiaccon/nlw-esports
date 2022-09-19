@@ -3,7 +3,6 @@ import { THEME } from "../../theme";
 
 const Container = styled.View`
   width: 100%;
-  padding: 32px;
 `;
 
 const Title = styled.Text`
